@@ -1,0 +1,15 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mlflow
+  namespace: mlflow
+  labels:
+    app: mlflow
+spec:
+  host: mlflow.apps-crc.testing
+  port:
+    targetPort: 5000
+  to:
+    kind: Service
+    name: mlflow
+    weight: 100

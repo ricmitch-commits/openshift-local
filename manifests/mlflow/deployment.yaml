@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow
+  namespace: mlflow
+  labels:
+    app: mlflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow
+  template:
+    metadata:
+      labels:
+        app: mlflow
+    spec:
+      containers:
+        - name: mlflow
+          image: image-registry.openshift-image-registry.svc:5000/mlflow/mlflow:3.10.1
+          command:
+            - mlflow
+            - server
+            - --host
+            - 0.0.0.0
+            - --port
+            - "5000"
+            - --backend-store-uri
+            - $(BACKEND_STORE_URI)
+            - --artifacts-destination
+            - /mlflow/artifacts
+            - --serve-artifacts
+            - --allowed-hosts
+            - mlflow.apps-crc.testing
+            - --cors-allowed-origins
+            - '*'
+          env:
+            - name: BACKEND_STORE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mlflow-db
+                  key: backend-store-uri
+            - name: MLFLOW_CORS_ALLOW_ORIGINS
+              value: '*'
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 2Gi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            failureThreshold: 30
+            periodSeconds: 10
+          volumeMounts:
+            - name: mlflow-artifacts
+              mountPath: /mlflow/artifacts
+      volumes:
+        - name: mlflow-artifacts
+          persistentVolumeClaim:
+            claimName: mlflow-artifacts

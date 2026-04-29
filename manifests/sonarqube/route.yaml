@@ -1,0 +1,15 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: sonarqube
+  namespace: sonarqube
+  labels:
+    app: sonarqube
+spec:
+  host: sonarqube.apps-crc.testing
+  port:
+    targetPort: 9000
+  to:
+    kind: Service
+    name: sonarqube
+    weight: 100
