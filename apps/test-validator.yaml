@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-validator
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: test-ns
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: guestbook
+    plugin:
+      name: manifest-validator
+    repoURL: 'https://github.com/ranakan19/argocd-example-apps.git'
+  syncPolicy:
+    automated:
+      prune: true
