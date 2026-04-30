@@ -11,9 +11,9 @@ spec:
   source:
     plugin:
       name: manifest-validator    
-    path: app
-    repoURL: https://github.com/ricmitch-commits/gitops-operator-test.git
+    repoURL: https://github.com/ricmitch-commits/openshift-local.git
     targetRevision: main
+    path: manifests/spring-petclinic/app
   syncPolicy:
     automated:
       prune: true
