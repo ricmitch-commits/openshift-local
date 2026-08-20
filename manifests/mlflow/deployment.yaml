@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: mlflow
-          image: image-registry.openshift-image-registry.svc:5000/mlflow/mlflow:v3.15.0
+          image: image-registry.openshift-image-registry.svc:5000/mlflow/mlflow:3.15.0
           command:
             - mlflow
             - server
