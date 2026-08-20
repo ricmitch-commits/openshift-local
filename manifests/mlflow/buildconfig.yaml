@@ -20,7 +20,7 @@ spec:
           rm -rf /var/lib/apt/lists/*
       RUN pip install --no-cache-dir \
           "mlflow[genai]==3.15.0" \
-          "cryptography<49" \
+          "cryptography==46.0.6" \
           psycopg2-binary
       RUN useradd -m -u 1000 mlflow
       USER 1000
