@@ -38,7 +38,7 @@ spec:
             privileged: true
       containers:
         - name: sonarqube
-          image: docker.io/sonarqube:25.3.0.104237-community
+          image: docker.io/sonarqube:26.1.0.118079-community
           ports:
             - containerPort: 9000
               protocol: TCP
