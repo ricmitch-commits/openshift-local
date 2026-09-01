@@ -6,8 +6,6 @@ metadata:
 spec:
   project: default
   source:
-    plugin:
-      name: manifest-validator    
     repoURL: https://github.com/ricmitch-commits/openshift-local.git
     targetRevision: main
     path: manifests/sonarqube
