@@ -23,6 +23,7 @@ spec:
       RUN pip install --no-cache-dir \
           "mlflow[genai]==3.17.2" \
           "cryptography==46.0.6" \
+          "psycopg[binary]" \
           psycopg2-binary
       RUN useradd -m -u 1000 mlflow
       USER 1000
