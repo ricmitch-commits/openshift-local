@@ -7,6 +7,7 @@ metadata:
     app: mlflow
 spec:
   replicas: 1
+  progressDeadlineSeconds: 3600
   selector:
     matchLabels:
       app: mlflow
@@ -68,8 +69,8 @@ spec:
             httpGet:
               path: /health
               port: 5000
-            failureThreshold: 30
-            periodSeconds: 10
+              failureThreshold: 360
+              periodSeconds: 10            
           volumeMounts:
             - name: mlflow-artifacts
               mountPath: /mlflow/artifacts
